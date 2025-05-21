@@ -22,11 +22,10 @@ public class TwoSum {
         // Create map for storing pairs of indexes and differences
         Map <Integer, Integer> pairs = new HashMap<>();
 
-        // First pass to fill in the map (includes constraint check with early return)
+        // First pass to fill in the map
         for (int i = 0; i < nums.length; i++) {
             Integer dif = target - nums[i];
             pairs.put(dif, i);
-
         }
         // Second pass to find the second index (with same elements check)
         for (int i = 0; i < nums.length; i++) {
@@ -42,11 +41,34 @@ public class TwoSum {
         return result;
     }
 
+    public int[] twoSumOnePass(int[] nums, int target) {
+        // Create array for returning the result
+        int[] result = new int[2];
+
+        // Create map for storing pairs of indexes and differences
+        Map <Integer, Integer> pairs = new HashMap<>();
+
+        // Single pass
+        for (int i = 0; i < nums.length; i++) {
+            Integer dif = target - nums[i];
+            if (pairs.containsKey(nums[i]) && i != pairs.get(nums[i])) {
+                // Populate the indexes into resulting array
+                result[0] = i;
+                result[1] = pairs.get(nums[i]);
+                break;
+            }
+            pairs.put(dif, i);
+        }
+
+        // Total complexity O(n)
+        return result;
+    }
+
     public static void main(String[] args) {
         TwoSum twosum = new TwoSum();
         int[] nums = {3, 3}; 
         int target = 6;
-        int[] res = twosum.twoSum(nums, target);
+        int[] res = twosum.twoSumOnePass(nums, target);
         System.out.println("Result: " + res[0] + ", " + res[1]);
     }
 }
