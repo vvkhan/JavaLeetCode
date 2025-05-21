@@ -22,42 +22,18 @@ public class TwoSum {
         // Create map for storing pairs of indexes and differences
         Map <Integer, Integer> pairs = new HashMap<>();
 
-        // First pass to fill in the map
-        for (int i = 0; i < nums.length; i++) {
-            Integer dif = target - nums[i];
-            pairs.put(dif, i);
-        }
-        // Second pass to find the second index (with same elements check)
-        for (int i = 0; i < nums.length; i++) {
-            if (pairs.containsKey(nums[i]) && i != pairs.get(nums[i])) {
-                // Populate the indexes into resulting array
-                result[0] = i;
-                result[1] = pairs.get(nums[i]);
-                break;
-            }
-        }
-
-        // Total complexity O(2n) = O(n)
-        return result;
-    }
-
-    public int[] twoSumOnePass(int[] nums, int target) {
-        // Create array for returning the result
-        int[] result = new int[2];
-
-        // Create map for storing pairs of indexes and differences
-        Map <Integer, Integer> pairs = new HashMap<>();
-
         // Single pass
         for (int i = 0; i < nums.length; i++) {
             Integer dif = target - nums[i];
-            if (pairs.containsKey(nums[i]) && i != pairs.get(nums[i])) {
+            // Check if the difference is already in the map and it's value != i
+            if (pairs.containsKey(dif) && i != pairs.get(dif)) {
                 // Populate the indexes into resulting array
                 result[0] = i;
-                result[1] = pairs.get(nums[i]);
-                break;
+                result[1] = pairs.get(dif);
+                break; // no need to continue since there's only one valid answer
             }
-            pairs.put(dif, i);
+            // If not, add the element and its index to the map
+            pairs.put(nums[i], i);
         }
 
         // Total complexity O(n)
@@ -66,9 +42,10 @@ public class TwoSum {
 
     public static void main(String[] args) {
         TwoSum twosum = new TwoSum();
+        // Corner case
         int[] nums = {3, 3}; 
         int target = 6;
-        int[] res = twosum.twoSumOnePass(nums, target);
+        int[] res = twosum.twoSum(nums, target);
         System.out.println("Result: " + res[0] + ", " + res[1]);
     }
 }
