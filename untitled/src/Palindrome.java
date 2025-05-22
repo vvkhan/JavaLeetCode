@@ -11,7 +11,7 @@ public class Palindrome {
     public boolean isPalindrome(int x) {
         boolean result = false;
         // Negative int is not palindrome as well as int ending with 0, early return
-        if (x < 0 || x % 10 == 0) {
+        if (x < 0 || (x != 0 && x % 10 == 0)) {
             return result;
         }
         // Another corner case:
@@ -49,7 +49,7 @@ public class Palindrome {
 
     public static void main(String[] args) {
         Palindrome palindrome = new Palindrome();
-        int x = 123432;
+        int x = 0;
         boolean res = palindrome.isPalindrome(x);
         System.out.println("Result: " + res);
     }
