@@ -47,18 +47,16 @@ public class RomanToInteger {
 
         for (int i = chars.length - 1; i >= 0; i--) {
             int num = pairs.get(chars[i]);
-            System.out.println("Index = " + i + ", Roman = " + chars[i] + ", Int = " + num);
 
-            if (i > 0) {
-                if (pairs.get(chars[i-1]) >= num) {
-                    result += num;
-                } else {
-                    result -= num;
+            if (i < chars.length - 1) {
+                if ((chars[i] == 'I' && (chars[i+1] == 'V' || chars[i+1] == 'X')) || 
+                    (chars[i] == 'X' && (chars[i+1] == 'L' || chars[i+1] == 'C')) || 
+                    (chars[i] == 'C' && (chars[i+1] == 'D' || chars[i+1] == 'M'))) {
+                    num = 0 - num;
                 }
-            } else {
-                result += num;
             }
-            System.out.println("Result = " + result);
+
+            result += num;
         }
 
         return result;
@@ -66,7 +64,7 @@ public class RomanToInteger {
 
     public static void main(String[] args) {
         RomanToInteger romanToInt = new RomanToInteger();
-        String s = "MCMXCIV";
+        String s = "III";
         int res = romanToInt.romanToInt(s);
         System.out.println(res);
     }
